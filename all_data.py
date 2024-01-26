@@ -25,10 +25,11 @@ print("imbalance: ")
 print(class_distribution)
 
 # plot Imbalance
-class_distribution.plot(kind='bar', rot=0)
+class_distribution.plot(kind='bar', rot=0, color=['b', 'g', 'c'])
 plt.title('Imbalanced Dataset')
 plt.xlabel('Lable')
 plt.ylabel('Count')
+plt.legend(["paradoxical sleep", "slow-wave sleep","wakefulness"])
 plt.show()
 plt.savefig('mein_plot.png')
 
