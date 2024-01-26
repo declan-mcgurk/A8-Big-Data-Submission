@@ -8,6 +8,7 @@ def windowing(data: pd.DataFrame, intervalsize: int) -> pd.DataFrame:
 
     # Connect the rows and create new array
     array_data_new = np.empty(intervalsize * array_data.shape[1])
+    temp = array_data[i:i + intervalsize].flatten()
 
     for i in np.arange(0, array_data.shape[0] - intervalsize + 1):
         print(i)

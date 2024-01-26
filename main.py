@@ -7,7 +7,7 @@ from featureengineering import fft_df
 from windowing import windowing
 
 def main():
-    PATH = "./compdata/dft/0_0-dft.csv"
+    PATH = "./compdata/0_0.csv"
     data = pd.read_csv(PATH)
 
     new = windowing(data, 5)
