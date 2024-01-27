@@ -7,7 +7,7 @@ from save import save_clf, load_clf
 
 def classify():
     datas = []
-    skip = 1
+    skip = 4
     for i in range(8):
         if i == skip:
             continue
@@ -35,7 +35,7 @@ def classify():
     X, y = rnd_sampling(X, y)
     
     print("Training clf...")
-    clf = RandomForestClassifier(n_estimators=50, verbose=2, n_jobs = -1)
+    clf = RandomForestClassifier(n_estimators=50, verbose=2, n_jobs=-1)
     clf.fit(X, y)
     print("Trained.")
 
@@ -43,15 +43,23 @@ def classify():
     save_clf(clf, "./classifiers/rf/dft_test-" + str(skip) + ".txt")
     print("Clf saved.")
 
-    # clf = load_clf("./classifiers/rf/trained_1-2-raw.txt")
+    clf_new = load_clf("./classifiers/rf/dft_test-" + str(skip) + ".txt")
 
-    # print("Loading new data...")
-    # new_data = pd.read_csv("./compdata/bdhsc_2024/stage1_labeled/7_0.csv")
-    # print("Loaded.")
+    print("Loading new data...")
+    new_datas = []
+    new_datas.append(pd.read_csv("./compdata/dft/" + str(skip) + "_0-dft.csv"))
+    new_datas.append(pd.read_csv("./compdata/dft/" + str(skip) + "_1-dft.csv"))
+    for i in range(len(new_datas)):
+        if skip == 0:
+            new_datas[i] = new_datas[i].iloc[:,1:5002]
 
-    # X_new = new_data.iloc[:, :5000]
-    # y_new = new_data.iloc[:, 5000]
-    # print(classification_report(y_new, clf.predict(X_new)))
+    new_data = pd.concat(new_datas, axis=0)
+    print(new_data.shape)
+    print("Loaded.")
+
+    X_new = new_data.iloc[:, :5000]
+    y_new = new_data.iloc[:, 5000]
+    print(classification_report(y_new, clf_new.predict(X_new)))
 
 def test():
     data = pd.read_csv("./compdata/dft/1_0-dft.csv")
