@@ -12,17 +12,24 @@ import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report
 
-PATHFOURIR = "./compdata/dft/4_0-dft.csv"
+PATHFOURIR = "./compdata/dft/6_0-dft.csv"
 data_f = pd.read_csv(PATHFOURIR)
-data_f_six = data_f.head(6)
-print(data_f_six.head())
-data_f_six['sum'] = data_f_six.sum(axis=1)
+df_first_six = data_f.head(6)
 
-print(data_f_six.shape)
-print(data_f_six['sum'].head())
+column_sums = df_first_six.sum()
+df_first_six.loc['sum'] = column_sums
 
-x = range(0,5001)
-plt.scatter(x, data_f_six['sum'], s=1, c='#87CEEB')
-plt.vlines(range(0, 5000), -10, 10, colors = '#6495ED')
-plt.ylim(np.min(data_f_six)*1.1, np.max(data_f_six)*1.1)
+last_row_values = df_first_six.iloc[-1, :].values
+df_last_row = pd.DataFrame([last_row_values], columns=df_first_six.columns)
+
+
+print(df_first_six.tail())
+print(df_last_row)
+
+
+array_data = df_last_row.values
+array_data_new = np.delete(array_data, array_data.shape[1] - 1, axis=1)
+x = range(0,5000)
+plt.scatter(x, array_data_new, s=1, c='#87CEEB')
+plt.ylim(np.min(array_data_new)*1.1, np.max(array_data_new)*1.1)
 plt.show()

@@ -76,14 +76,14 @@ def plot_confusion_matrix_en(y_true, y_pred, rat: int):
 
 #test imbalanced original data 0 and all
 
-PATHDFT = "./compdata/bdhsc_2024/stage1_labeled/0_4.csv"
+PATHDFT = "./compdata/bdhsc_2024/stage1_labeled/6_0.csv"
 data = pd.read_csv(PATHDFT)
+plot_Data(data, 0, 6, 6)
 
+'''
 PATHFOURIR = "./compdata/dft/4_0-dft.csv"
 data_f = pd.read_csv(PATHDFT)
 
-
-plot_Data(data, 0, 6, 4)
 
 
 
@@ -145,4 +145,4 @@ data = pd.concat(datas, axis=0).astype("float32")
 print("final shape:")
 print(data.shape)
 
-plot_Imbalanced(data, 10)
+plot_Imbalanced(data, 10)'''
