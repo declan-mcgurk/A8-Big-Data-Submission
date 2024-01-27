@@ -50,7 +50,7 @@ def plot_classification_report(y_true, y_pred, rat: int):
 
     # Plot heatmap for precision, recall, and f1-score
     plt.figure(figsize=(15, 10))
-    sns.heatmap(df_report[['precision', 'recall', 'f1-score']], annot=True, cmap=sns.light_palette("skyblue", as_cmap=True), fmt=".3f", linewidths=.5, xticklabels=('Precision', 'Recall', 'F1-score'), yticklabels=("Paradoxical Sleep", "Slow-Wave Sleep", "Wakefulness"), rotation=45)
+    sns.heatmap(df_report[['precision', 'recall', 'f1-score']], annot=True, cmap=sns.light_palette("skyblue", as_cmap=True), fmt=".3f", linewidths=.5, xticklabels=('Precision', 'Recall', 'F1-score'), yticklabels=("Paradoxical Sleep", "Slow-Wave Sleep", "Wakefulness"))
     plt.xlabel('Predicted')
     plt.ylabel('True')
     plt.title('Classification Report')
@@ -76,8 +76,17 @@ def plot_confusion_matrix_en(y_true, y_pred, rat: int):
 
 #test imbalanced original data 0 and all
 
-PATHDFT = "./compdata/bdhsc_2024/stage1_labeled/0_0.csv"
+PATHDFT = "./compdata/bdhsc_2024/stage1_labeled/0_4.csv"
 data = pd.read_csv(PATHDFT)
+
+PATHFOURIR = "./compdata/dft/4_0-dft.csv"
+data_f = pd.read_csv(PATHDFT)
+
+
+plot_Data(data, 0, 6, 4)
+
+
+
 
 plot_Data(data, 50, 10, 0)
 plot_Imbalanced(data, 0)
