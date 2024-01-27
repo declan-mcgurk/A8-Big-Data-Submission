@@ -33,12 +33,12 @@ def plot_Imbalanced(data: pd.DataFrame, rat: int):
 def plot_Data(data: pd.DataFrame, start: int, length: int, rat: int):
     array_data = data.values
     array_data_new = np.delete(array_data, array_data.shape[1] - 1, axis=1)
-    array_flatten = array_data_new[start:start+length].flatten()
+    array_flatten = array_data_new[start:start+length, :].flatten()
 
-    x = range(start,length*5000)
+    x = range(start,start+length*5000)
     plt.scatter(x, array_flatten, s=1, c='#87CEEB')
     plt.vlines(range(start, length*5000, 5000,), -10, 10, colors = '#6495ED')
-    plt.ylim(np.min(array_flatten), np.max(array_flatten))
+    plt.ylim(np.min(array_flatten)*1.1, np.max(array_flatten)*1.1)
     plt.show()
     plt.savefig('data_plot' + str(length) + "rat:_" + str(rat))
 
@@ -50,7 +50,7 @@ def plot_classification_report(y_true, y_pred, rat: int):
 
     # Plot heatmap for precision, recall, and f1-score
     plt.figure(figsize=(15, 10))
-    sns.heatmap(df_report[['precision', 'recall', 'f1-score']], annot=True, cmap=sns.light_palette("skyblue", as_cmap=True), fmt=".3f", linewidths=.5, xticklabels=('Precision', 'Recall', 'F1-score'), yticklabels=("Paradoxical Sleep", "Slow-Wave Sleep", "Wakefulness"))
+    sns.heatmap(df_report[['precision', 'recall', 'f1-score']], annot=True, cmap=sns.light_palette("skyblue", as_cmap=True), fmt=".3f", linewidths=.5, xticklabels=('Precision', 'Recall', 'F1-score'), yticklabels=("Paradoxical Sleep", "Slow-Wave Sleep", "Wakefulness"), rotation=45)
     plt.xlabel('Predicted')
     plt.ylabel('True')
     plt.title('Classification Report')
@@ -71,6 +71,16 @@ def plot_confusion_matrix_en(y_true, y_pred, rat: int):
     plt.ylabel('True')
     plt.show()
     plt.savefig("CM" + str(rat))
+
+
+
+#test imbalanced original data 0 and all
+
+PATHDFT = "./compdata/bdhsc_2024/stage1_labeled/0_0.csv"
+data = pd.read_csv(PATHDFT)
+
+plot_Data(data, 50, 10, 0)
+plot_Imbalanced(data, 0)
 
 
 
@@ -100,13 +110,8 @@ plot_confusion_matrix_en(y_pred, y_test, 7)
 
 
 
-#test imbalanced original data 0 and all
 
-PATHDFT = "./compdata/bdhsc_2024/stage1_labeled/0_0.csv"
-data = pd.read_csv(PATHDFT)
 
-plot_Imbalanced(data, 0)
-plot_Data(data, 50, 10, 0)
 
 
 datas = []
