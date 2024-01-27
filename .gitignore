@@ -1,2 +1,6 @@
 # data files
 *.csv
+*.zip
+
+# cache
+**/__pycache__

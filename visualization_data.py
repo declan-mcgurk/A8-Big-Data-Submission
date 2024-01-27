@@ -6,7 +6,11 @@ j=0
 
 PATH = "./compdata/bdhsc_2024/stage1_labeled/" + str(i) + "_" + str(j) + ".csv"
 data = pd.read_csv(PATH)
+data = data.drop("5000", axis=1)
+
+print(data.head())
 
 array_data = data.values
-array_flatten = array_data[:5].flatten()
-print(plt.plot(array_flatten[25000]))
+array_flatten = array_data[:100].flatten()[:]
+plt.plot(array_flatten)
+plt.show()
