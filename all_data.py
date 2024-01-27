@@ -3,9 +3,7 @@ import os
 import matplotlib.pyplot as plt
 
 
-directory_path = './compdata/bdhsc_2024/stage1_labeled'
-
-
+'''directory_path = './compdata/bdhsc_2024/stage1_labeled'
 dataframes = []
 
 for filename in os.listdir(directory_path):
@@ -19,19 +17,35 @@ for filename in os.listdir(directory_path):
 
 big_dataframe = pd.concat(dataframes, ignore_index=True)
 print(big_dataframe)
+'''
+
+PATHDFT = "./compdata/bdhsc_2024/stage1_labeled/0_0.csv"
+big_dataframe = pd.read_csv(PATHDFT)
 
 class_distribution = big_dataframe.iloc[:, -1].value_counts()
 print("imbalance: ")
 print(class_distribution)
 
 # plot Imbalance
-class_distribution.plot(kind='bar', rot=0, color=['b', 'g', 'c'])
+class_distribution.plot(kind='bar', rot=0, color=['#87CEEB', '#6495ED', '#4169E1'])
 plt.title('Imbalanced Dataset')
 plt.xlabel('Lable')
-plt.ylabel('Count')
-plt.legend(["paradoxical sleep", "slow-wave sleep", "wakefulness"])
+plt.ylabel('Lable distribution')
+plt.legend(["Paradoxical Sleep", "Slow-Wave Sleep", "Wakefulness"], shadow=True, fontsize=12, loc='upper left')
 plt.show()
 plt.savefig('mein_plot.png')
+
+
+#plot Data
+array_data_final = data_final.values
+array_flatten_final = array_data_final[:5].flatten()
+plt.plot(array_flatten[25000])
+
+
+
+
+
+
 '''
 
 #create 10% dataframe
@@ -54,5 +68,5 @@ print(extra_dataframe)'''
 
 #save dataframe
 #extra_dataframe.to_csv('./A8-Big-Data-Submission', index=False)
-big_dataframe.to_csv('./A8-Big-Data-Submission', index=False)
+#big_dataframe.to_csv('./A8-Big-Data-Submission', index=False)
 

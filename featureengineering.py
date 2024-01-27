@@ -2,6 +2,8 @@ from numpy import nonzero
 from numpy import fft
 from pandas import DataFrame, concat, read_csv
 from tqdm import tqdm
+from sklearn.decomposition import PCA
+import matplotlib.pyplot as plt
 
 # Function to apply FFT to each row
 def apply_fft(row):
@@ -28,3 +30,22 @@ def fft_df():
                 # You may want to take the absolute value or other processing based on your specific needs
                     
                 fft_result.to_csv("./compdata/" + str(i) + "_" + str(j) + ".csv")
+
+
+def pca(X: DataFrame, Y: DataFrame) -> DataFrame:
+
+    pca = PCA()
+    pca.fit(X, Y)
+
+    plt.plot(X.keys(), pca.explained_variance_ratio_)
+    plt.xticks(rotation=30, ha='right')
+    plt.xlabel("X")
+    plt.ylabel("Explained variance")
+    plt.show()
+
+    plt.plot(cumsum(pca.explained_variance_ratio_))
+    plt.xlabel("Number of features")
+    plt.ylabel("Explained variance")
+    plt.show()
+
+    return pca
