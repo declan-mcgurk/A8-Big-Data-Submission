@@ -1,9 +1,27 @@
-
 import pandas as pd
 import numpy as np
 from imblearn.over_sampling import RandomOverSampler
-
+'''
 data = pd.read_csv('C:/Users/sudak/A8-Big-Data-Submission/bdhsc_2024\stage1_labeled/0_0.csv')
+'''
+
+df1 = pd.read_csv('C:/Users/sudak/A8-Big-Data-Submission/bdhsc_2024/stage1_labeled/0_0.csv')
+df2 = pd.read_csv('C:/Users/sudak/A8-Big-Data-Submission/bdhsc_2024/stage1_labeled/0_1.csv')
+#df3 = pd.read_csv('C:/Users/sudak/A8-Big-Data-Submission/bdhsc_2024/stage1_labeled/1_0.csv')
+#df4 = pd.read_csv('C:/Users/sudak/A8-Big-Data-Submission/bdhsc_2024/stage1_labeled/1_1.csv')
+#df5 = pd.read_csv('C:/Users/sudak/A8-Big-Data-Submission/bdhsc_2024/stage1_labeled/2_0.csv')
+#df6 = pd.read_csv('C:/Users/sudak/A8-Big-Data-Submission/bdhsc_2024/stage1_labeled/2_1.csv')
+#df7 = pd.read_csv('C:/Users/sudak/A8-Big-Data-Submission/bdhsc_2024/stage1_labeled/3_0.csv')
+#df8 = pd.read_csv('C:/Users/sudak/A8-Big-Data-Submission/bdhsc_2024/stage1_labeled/3_1.csv')
+
+data1=df1
+data2=df2
+'''
+
+'''
+data1 = pd.concat([df1, df2, df3, df4, df5, df6], ignore_index=True)
+data2 = pd.concat([df7, df8], ignore_index=True)
+'''
 
 '''CODE FOR WINDOWED DATA
 selected_columns = ['5000', '10001', '15002', '20003', '25004']
@@ -12,24 +30,27 @@ X = data.drop(['5000', '10001', '15002', '20003', '25004', 'lable'], axis=1)
 y = data['lable']
 '''
 
-X = data.drop(['5000'], axis=1)
-y = data['5000']
+'''
+X_train = data1.drop(['5000'], axis=1)
+y_train = data1['5000']
 
-
+X_test = data2.drop(['5000'], axis=1)
+y_test = data2['5000']
+'''
+'''
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
-
+'''
+'''
 ros = RandomOverSampler(random_state=42)
-X_train, y_train = ros.fit_resample(X_train, y_train)
-
+X_train,y_train = ros.fit_resample(X_train, y_train)
+'''
 
 '''
 print(X_experiment.shape)
 
 X_experiment.to_csv('windowed_data_X_0_0.csv', index=False)
 y_experiment.to_csv('windowed_data_y_0_0.csv', index=False)
-
-
 
 X_experiment = pd.read_csv('windowed_data_X_0_0.csv')
 y_experiment = pd.read_csv('windowed_data_y_0_0.csv')
@@ -44,20 +65,17 @@ from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 '''
 
+
+
+'''USE IT
 # Quick sanity check with the shapes of Training and Testing datasets
 print(X_train.shape)
 print(y_train.shape)
 print(X_test.shape)
 print(y_test.shape)
-
 '''
-bin_edges = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2]
 
-binned_data = X_experiment.apply(lambda col: pd.cut(col, bins=bin_edges, labels=False))
 
-X_experiment = X_experiment.drop('lable')
-print(X_experiment.head())
-'''
 '''
 from keras.models import Sequential
 from keras.layers import Dense, Activation
@@ -199,13 +217,14 @@ ResultsData=FunctionFindBestParams(X_train, y_train)
 X_experiment = X_experiment.drop(['lable'], axis=1)
 '''
 
-
+'''USE IT
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Dropout
+from tensorflow.keras.layers import Dense, Dropout, LSTM
 from tensorflow.keras.optimizers import Adam
 from sklearn.metrics import classification_report
 
+import tensorflow as tf
 # Convert labels to one-hot encoding
 y_train_onehot = tf.keras.utils.to_categorical(y_train, num_classes=3)
 y_test_onehot = tf.keras.utils.to_categorical(y_test, num_classes=3)
@@ -229,4 +248,57 @@ model.fit(X_train, y_train_onehot, epochs=50, batch_size=64, validation_split=0.
 # Evaluate the model
 y_pred = model.predict(X_test)
 y_pred_classes = tf.argmax(y_pred, axis=1)
+print(classification_report(y_test, y_pred_classes))
+
+'''
+import numpy as np
+import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import LSTM, Dense, Dropout
+from tensorflow.keras.optimizers import Adam
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.datasets import make_classification
+from sklearn.metrics import classification_report
+
+data = pd.read_csv('C:/Users/sudak/A8-Big-Data-Submission/fourier_transformed_data/1_0-dft.csv')
+
+X = data.drop(['5000'], axis=1)
+y= data['5000']
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+ros = RandomOverSampler(random_state=42)
+X_train,y_train = ros.fit_resample(X_train, y_train)
+
+
+# Reshape the input data for LSTM (samples, timesteps, features)
+timesteps = 1  # You can adjust the number of timesteps as needed
+X_train_lstm = np.reshape(X_train, (X_train.shape[0], timesteps, X_train.shape[1]))
+X_test_lstm = np.reshape(X_test, (X_test.shape[0], timesteps, X_test.shape[1]))
+
+# Convert labels to one-hot encoding
+y_train_onehot = tf.keras.utils.to_categorical(y_train, num_classes=3)
+y_test_onehot = tf.keras.utils.to_categorical(y_test, num_classes=3)
+
+# Define the LSTM model
+model = Sequential()
+model.add(LSTM(units=128, input_shape=(timesteps, 5000), activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(units=64, activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(units=32, activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(units=3, activation='softmax'))  # Output layer with softmax activation for three classes
+
+# Compile the model
+model.compile(optimizer=Adam(learning_rate=0.001), loss='categorical_crossentropy', metrics=['accuracy'])
+
+# Train the model
+model.fit(X_train_lstm, y_train_onehot, epochs=10, batch_size=64, validation_split=0.2)
+
+# Evaluate the model
+y_pred = model.predict(X_test_lstm)
+y_pred_classes = np.argmax(y_pred, axis=1)
 print(classification_report(y_test, y_pred_classes))
