@@ -29,10 +29,10 @@ class_distribution.plot(kind='bar', rot=0, color=['b', 'g', 'c'])
 plt.title('Imbalanced Dataset')
 plt.xlabel('Lable')
 plt.ylabel('Count')
-plt.legend(["paradoxical sleep", "slow-wave sleep","wakefulness"])
+plt.legend(["paradoxical sleep", "slow-wave sleep", "wakefulness"])
 plt.show()
 plt.savefig('mein_plot.png')
-
+'''
 
 #create 10% dataframe
 
@@ -50,9 +50,9 @@ extra_dataframe = pd.DataFrame(sampled_data)
 extra_dataframe.reset_index(drop=True, inplace=True)
 
 # Display the new DataFrame
-print(extra_dataframe)
+print(extra_dataframe)'''
 
 #save dataframe
-extra_dataframe.to_csv('./A8-Big-Data-Submission', index=False)
+#extra_dataframe.to_csv('./A8-Big-Data-Submission', index=False)
 big_dataframe.to_csv('./A8-Big-Data-Submission', index=False)
 
