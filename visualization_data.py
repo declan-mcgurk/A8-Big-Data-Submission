@@ -41,7 +41,12 @@ plt.show()
 plt.savefig('data_plot' + str(n))'''
 
 #accuracy
+#train test split
+X = data.drop('5000', axis=1)
+y = data['5000']
 
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 rf = save.load_clf("./classifiers/rf/dft_test-1.txt")
 y_pred = rf.predict(model_Hannah.X_test)
 

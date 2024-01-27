@@ -3,7 +3,6 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from imblearn.over_sampling import RandomOverSampler
 from sklearn.metrics import confusion_matrix
-#import shap
 import pandas as pd
 import io
 import matplotlib.pyplot as plt
@@ -13,7 +12,6 @@ from sklearn.datasets import make_classification
 import seaborn as sns
 from sklearn.metrics import classification_report
 from sklearn.ensemble import RandomForestClassifier
-shap.initjs()
 from sklearn.model_selection import train_test_split
 from sklearn.datasets import make_classification
 from sklearn.ensemble import RandomForestClassifier

@@ -17,15 +17,15 @@ def classify():
         if i == 0:
             tmp0 = tmp0.iloc[:, 1:5002]
             tmp1 = tmp1.iloc[:, 1:5002]
-        datas.append(tmp0)
-        datas.append(tmp1)
+        datas.append(tmp0.astype("float32"))
+        datas.append(tmp1.astype("float32"))
 
 
     print("Shapes:")
     for df in datas:
         print(df.shape)
 
-    data = pd.concat(datas, axis=0)
+    data = pd.concat(datas, axis=0).astype("float32")
 
     print("final shape:")
     print(data.shape)
