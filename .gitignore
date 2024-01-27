@@ -1,2 +1,12 @@
 # data files
 *.csv
+*.zip
+
+# classifiers
+*.txt
+
+# outputs
+*.png
+
+# cache
+**/__pycache__
