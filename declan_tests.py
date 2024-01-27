@@ -7,13 +7,19 @@ from save import save_clf, load_clf
 
 def classify():
     datas = []
-    skip = 0
+    skip = 1
     for i in range(8):
         if i == skip:
             continue
         print("Reading data " + str(i) + "...")
-        datas.append(pd.read_csv("./compdata/dft/" + str(i) + "_0-dft.csv"))
-        datas.append(pd.read_csv("./compdata/dft/" + str(i) + "_1-dft.csv"))
+        tmp0 = pd.read_csv("./compdata/dft/" + str(i) + "_0-dft.csv")
+        tmp1 = pd.read_csv("./compdata/dft/" + str(i) + "_1-dft.csv")
+        if i == 0:
+            tmp0 = tmp0.iloc[:, 1:5002]
+            tmp1 = tmp1.iloc[:, 1:5002]
+        datas.append(tmp0)
+        datas.append(tmp1)
+
 
     print("Shapes:")
     for df in datas:
@@ -29,7 +35,7 @@ def classify():
     X, y = rnd_sampling(X, y)
     
     print("Training clf...")
-    clf = RandomForestClassifier(n_estimators=50, verbose=2)
+    clf = RandomForestClassifier(n_estimators=50, verbose=2, n_jobs = -1)
     clf.fit(X, y)
     print("Trained.")
 

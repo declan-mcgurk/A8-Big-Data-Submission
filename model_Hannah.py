@@ -3,7 +3,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from imblearn.over_sampling import RandomOverSampler
 from sklearn.metrics import confusion_matrix
-import shap
+#import shap
 import pandas as pd
 import io
 import matplotlib.pyplot as plt
