@@ -7,27 +7,13 @@ from save import save_clf, load_clf
 
 def classify():
     datas = []
-    print("Reading data 0...")
-    datas.append(pd.read_csv("./compdata/dft/0_0.csv"))
-    datas.append(pd.read_csv("./compdata/bdhsc_2024/stage1_labeled/0_1.csv"))
-    print("Reading data 2...")
-    datas.append(pd.read_csv("./compdata/bdhsc_2024/stage1_labeled/2_0.csv"))
-    datas.append(pd.read_csv("./compdata/bdhsc_2024/stage1_labeled/2_1.csv"))
-    print("Reading data 3...")
-    datas.append(pd.read_csv("./compdata/bdhsc_2024/stage1_labeled/3_0.csv"))
-    datas.append(pd.read_csv("./compdata/bdhsc_2024/stage1_labeled/3_1.csv"))
-    print("Reading data 4...")
-    datas.append(pd.read_csv("./compdata/bdhsc_2024/stage1_labeled/4_0.csv"))
-    datas.append(pd.read_csv("./compdata/bdhsc_2024/stage1_labeled/4_1.csv"))
-    print("Reading data 5...")
-    datas.append(pd.read_csv("./compdata/bdhsc_2024/stage1_labeled/5_0.csv"))
-    datas.append(pd.read_csv("./compdata/bdhsc_2024/stage1_labeled/5_1.csv"))
-    print("Reading data 6...")
-    datas.append(pd.read_csv("./compdata/bdhsc_2024/stage1_labeled/6_0.csv"))
-    datas.append(pd.read_csv("./compdata/bdhsc_2024/stage1_labeled/6_1.csv"))
-    print("Reading data 7...")
-    datas.append(pd.read_csv("./compdata/bdhsc_2024/stage1_labeled/7_0.csv"))
-    datas.append(pd.read_csv("./compdata/bdhsc_2024/stage1_labeled/7_1.csv"))
+    skip = 0
+    for i in range(8):
+        if i == skip:
+            continue
+        print("Reading data " + str(i) + "...")
+        datas.append(pd.read_csv("./compdata/dft/" + str(i) + "_0-dft.csv"))
+        datas.append(pd.read_csv("./compdata/dft/" + str(i) + "_1-dft.csv"))
 
     print("Shapes:")
     for df in datas:
@@ -48,7 +34,7 @@ def classify():
     print("Trained.")
 
     print("Saving clf...")
-    save_clf(clf, "./classifiers/rf/dft_test-1.txt")
+    save_clf(clf, "./classifiers/rf/dft_test-" + str(skip) + ".txt")
     print("Clf saved.")
 
     # clf = load_clf("./classifiers/rf/trained_1-2-raw.txt")
