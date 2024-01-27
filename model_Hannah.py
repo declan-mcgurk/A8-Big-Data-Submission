@@ -18,6 +18,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.datasets import make_classification
 from sklearn.ensemble import RandomForestClassifier
 import matplotlib.pyplot as plt
+import save
 
 '''PATHWIN = "C:/Users/hanna/OneDrive/Dokumente/#Florida/#Spring Semester/A8-Big-Data-Submission/compdata/win/0_0-win.csv"
 data = pd.read_csv(PATHWIN)'''
@@ -58,6 +59,8 @@ print("train rf")
 # Random forest
 rf_classifier = RandomForestClassifier(n_estimators=100, random_state=42)
 rf_classifier.fit(X_train_resampled, y_train_resampled)
+
+save.save_clf(rf_classifier, "./classifiers/rf/dft_test-1.txt")
 
 y_pred = rf_classifier.predict(X_test)
 

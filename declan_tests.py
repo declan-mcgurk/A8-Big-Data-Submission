@@ -8,7 +8,7 @@ from save import save_clf, load_clf
 def classify():
     datas = []
     print("Reading data 0...")
-    datas.append(pd.read_csv("./compdata/bdhsc_2024/stage1_labeled/0_0.csv"))
+    datas.append(pd.read_csv("./compdata/dft/0_0.csv"))
     datas.append(pd.read_csv("./compdata/bdhsc_2024/stage1_labeled/0_1.csv"))
     print("Reading data 2...")
     datas.append(pd.read_csv("./compdata/bdhsc_2024/stage1_labeled/2_0.csv"))
