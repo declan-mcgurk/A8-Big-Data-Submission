@@ -1,25 +1,34 @@
 
 import pandas as pd
 import numpy as np
-'''
-data = pd.read_csv('C:/Users/sudak/A8-Big-Data-Submission/fft_data/0_0-win.csv')
+from imblearn.over_sampling import RandomOverSampler
 
+data = pd.read_csv('C:/Users/sudak/A8-Big-Data-Submission/bdhsc_2024\stage1_labeled/0_0.csv')
 
+'''CODE FOR WINDOWED DATA
 selected_columns = ['5000', '10001', '15002', '20003', '25004']
 data['lable'] = round(data[selected_columns].mean(axis=1))
-X = data.drop(['5000', '10001', '15002', '20003', '25004'], axis=1)
+X = data.drop(['5000', '10001', '15002', '20003', '25004', 'lable'], axis=1)
 y = data['lable']
-print(y.shape)
+'''
+
+X = data.drop(['5000'], axis=1)
+y = data['5000']
 
 
 from sklearn.model_selection import train_test_split
-X_experiment, X_unused, y_experiment, y_unused = train_test_split(X, y, test_size=0.9, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
+ros = RandomOverSampler(random_state=42)
+X_train, y_train = ros.fit_resample(X_train, y_train)
+
+
+'''
 print(X_experiment.shape)
 
 X_experiment.to_csv('windowed_data_X_0_0.csv', index=False)
 y_experiment.to_csv('windowed_data_y_0_0.csv', index=False)
-'''
+
 
 
 X_experiment = pd.read_csv('windowed_data_X_0_0.csv')
@@ -33,7 +42,7 @@ y = y_experiment
 # Split the data into training and testing set
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
-
+'''
 
 # Quick sanity check with the shapes of Training and Testing datasets
 print(X_train.shape)
@@ -186,15 +195,15 @@ def FunctionFindBestParams(X_train, y_train):
 # Calling the function
 ResultsData=FunctionFindBestParams(X_train, y_train)
 '''
-X_experiment = X_experiment.drop()
+'''
+X_experiment = X_experiment.drop(['lable'], axis=1)
+'''
+
 
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.optimizers import Adam
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-from sklearn.datasets import make_classification
 from sklearn.metrics import classification_report
 
 # Convert labels to one-hot encoding
@@ -203,7 +212,7 @@ y_test_onehot = tf.keras.utils.to_categorical(y_test, num_classes=3)
 
 # Define the model
 model = Sequential()
-model.add(Dense(units=128, input_dim=25001, activation='relu'))
+model.add(Dense(units=128, input_dim=5000, activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(units=64, activation='relu'))
 model.add(Dropout(0.5))
