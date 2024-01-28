@@ -65,27 +65,11 @@ import save
 import tensorflow as tf
 PATH = './classifiers/ann/ann.txt'
 new_clf = save.load_clf(PATH)
-print(classification_report(y_test, new_clf.predict(X_test)))
+
+# Evaluate the model
+y_pred = new_clf.predict(X_test)
+y_pred_classes = tf.argmax(y_pred, axis=1)
+print(classification_report(y_test, y_pred_classes))
 
 
-# Generate learning curve
-train_sizes, train_scores, valid_scores = learning_curve(new_clf, X_train, y_train, train_sizes=np.linspace(0.1, 1.0, 10), cv=5)
-
-# Calculate mean and standard deviation of training and validation scores
-train_scores_mean = np.mean(train_scores, axis=1)
-train_scores_std = np.std(train_scores, axis=1)
-valid_scores_mean = np.mean(valid_scores, axis=1)
-valid_scores_std = np.std(valid_scores, axis=1)
-
-# Plot learning curve
-plt.figure(figsize=(10, 6))
-plt.fill_between(train_sizes, train_scores_mean - train_scores_std, train_scores_mean + train_scores_std, alpha=0.1, color="r")
-plt.fill_between(train_sizes, valid_scores_mean - valid_scores_std, valid_scores_mean + valid_scores_std, alpha=0.1, color="g")
-plt.plot(train_sizes, train_scores_mean, 'o-', color="r", label="Training score")
-plt.plot(train_sizes, valid_scores_mean, 'o-', color="g", label="Cross-validation score")
-plt.xlabel("Training examples")
-plt.ylabel("Score")
-plt.title("Learning Curve")
-plt.legend(loc="best")
-plt.grid(True)
-plt.show()
+plot_learning_curve(new_clf,title = "Random Forest learning curve", x = X_train, y = y_train);
